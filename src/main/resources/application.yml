@@ -1,1 +1,20 @@
 
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  #profile 관리
+  profiles:
+    include: secret
+
+  output:
+    ansi:
+      enabled: always
+
+  # swagger
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
