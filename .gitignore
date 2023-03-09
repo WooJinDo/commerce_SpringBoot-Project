@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### application-actual.yml ###
+application-secret.yml
