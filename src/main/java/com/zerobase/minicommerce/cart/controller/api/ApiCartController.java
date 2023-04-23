@@ -43,7 +43,7 @@ public class ApiCartController {
         return ResponseEntity.ok().body(response);
     }
 
-    /* 장바구니 수량 변경 */
+    /* 장바구니 상품 삭제 */
     @DeleteMapping("/api/cart/deleteCartProduct/{cartProductIds}")
     public ResponseEntity<?> deleteCartProduct(@PathVariable("cartProductIds") String cartProductIds,Principal principal) {
         String email = principal.getName();
@@ -52,15 +52,5 @@ public class ApiCartController {
         return ResponseEntity.ok().body(true);
     }
 
-//
-//    @DeleteMapping("/api/cart/cartItem/{cartItemId}")
-//    public ResponseEntity<?> deleteCartProduct(Model model, @PathVariable("cartItemId") Long cartItemId, Principal principal) {
-//
-//        String email = principal.getName();
-//
-//        Long deletedCartItemId = cartService.deleteItemInCart(email, cartItemId);
-//
-//        return ResponseEntity.ok().body("responseResult");
-//    }
 
 }

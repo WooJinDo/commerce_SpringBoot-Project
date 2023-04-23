@@ -53,7 +53,7 @@ public class CategoryImgServiceImpl implements CategoryImgService {
             imgPath = filePath[1];
             SubFolderFilePath = filePath[2];
 
-            imgUrlPath = File.separator + "images" + File.separator + "category" + File.separator + SubFolderFilePath;
+            imgUrlPath = File.separator + "img" + File.separator + "category" + File.separator + SubFolderFilePath;
         }
 
         log.info("imgUrlPath: " + imgUrlPath);
