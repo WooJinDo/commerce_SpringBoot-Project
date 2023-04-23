@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록화면</title>
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/layout1.css}" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!--추가 CSS -->
+    <th:block layout:fragment="css">
+        <style>
+
+      .addForm {
+        margin-top: 80px;
+      }
+
+    </style>
+    </th:block>
+
+</head>
+<body>
+
+<div th:replace="fragments/header::header"></div>
+
+<div class="content">
+    <h2>상품 목록 페이지</h2>
+    <div id="addBtn">
+        <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="nav-link" href="/admin/product/add.do">
+            <h2><span class="badge badge-secondary">상품 등록</span></h2>
+        </a>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">카테고리</th>
+            <th scope="col">상품명</th>
+            <th scope="col">판매상태</th>
+            <th scope="col">공개여부</th>
+            <th scope="col">등록일</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="product, status : ${productList}">
+            <th scope="row" th:text="${status.index+1}"></th>
+            <td th:text="${product.categoryName}"></td>
+            <td>
+                <p>
+                    <a th:href="@{/admin/product/update.do(productId = ${product.productId})}" th:text="${product.productName}">
+                    </a>
+                </p>
+            </td>
+            <td>
+                <span th:if="${product.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="badge badge-primary mgb-15">
+                        판매
+                </span>
+                <span th:unless="${product.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="badge btn-danger mgb-15" >
+                        품절
+                </span>
+            </td>
+            <td>
+                <span th:if="${product.publishStatus == true}" class="badge badge-info mgb-15">
+                        공개
+                </span>
+                <span th:unless="${product.publishStatus == true}" class="badge btn-danger mgb-15" >
+                        비공개
+                </span>
+            </td>
+            <td th:text="${product.getCreatedAtText}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div class="header" th:fragment="header">
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">Shop</a>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/product/list.do">전체 상품</a>
+                </li>
+                <li class="nav-item">
+                    <!-- 어떤 권한(사용자, 관라자)이건 상관없이 인증이 되었다면 보여지게 됨 -->
+                    <a sec:authorize="isAuthenticated()" class="nav-link" href="/cart/list.do">장바구니</a>
+                </li>
+                <li class="nav-item">
+                    <a sec:authorize="isAuthenticated()" class="nav-link" href="/order/history.do">내 주문내역</a>
+                </li>
+                <li class="nav-item">
+                    <!-- ROLE_ADMIN 권한을 갖는다면 이 글이 보임 -->
+                    <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="nav-link" href="/admin/product/list.do">상품 관리</a>
+                </li>
+                <li class="nav-item">
+                    <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="nav-link" href="/admin/category/add.do">카테고리 관리</a>
+                </li>
+                <li class="nav-item">
+                    <!-- 인증(로그인)이 되어있지 않는 경우 보여지게 됨 -->
+                    <a sec:authorize="isAnonymous()" class="nav-link" href="/member/login">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a sec:authorize="isAuthenticated()" class="nav-link" href="/member/logout">로그아웃</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+</html>
