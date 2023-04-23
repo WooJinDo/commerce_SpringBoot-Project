@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerobase.minicommerce.admin.mapper.CategoryMapper">
+
+    <!-- 카테고리 리스트 - 관리자, 사용자 -->
+    <select id="categorySelectList" resultType="com.zerobase.minicommerce.admin.dto.CategoryDto$ListResponse">
+        SELECT
+            A.CATEGORY_ID
+            , A.CATEGORY_NAME
+            , B.IMG_URL_PATH
+        FROM CATEGORY A
+            INNER JOIN CATEGORY_IMG  B
+            ON A.CATEGORY_ID = B.CATEGORY_ID
+
+    </select>
+</mapper>

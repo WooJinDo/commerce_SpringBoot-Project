@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 상품</title>
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/layout1.css}" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- axios cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <th:block layout:fragment="script">
+    <script th:inline="javascript">
+    window.addEventListener('DOMContentLoaded', function(){
+
+        calculateTotalPrice();
+
+        $("#cartQuantity").on("change", function() {
+            calculateTotalPrice();
+        });
+    });
+
+    // 수량에 따른 결제 금액
+    function calculateTotalPrice(){
+        const cartQuantity = document.getElementById('cartQuantity').value; // 상품 수량
+        const productPrice = document.getElementById('productPrice').value; // 상품 가격
+        const totalPrice = productPrice * cartQuantity; // 상품 총금액
+        $("#totalPrice").html(totalPrice + '원');
+    }
+
+    // 장바구니 상품 추가
+    function addCart(){
+        const cartMsg = '장바구니에 해당 상품을 추가하겠습니까?';
+
+        if(!confirm(cartMsg)){
+            return false;
+        }
+
+        // 로그인 여부 확인
+        if(!isLoginCheck()){
+            return false;
+        }
+
+        let url = '/api/cart/addCartProduct';
+        let productId = document.getElementById('productId').value;
+        let cartQuantity = document.getElementById('cartQuantity').value;
+
+        const param = {
+            productId: productId
+           , cartQuantity : cartQuantity
+        };
+
+        axios.post(url, param).then(function(response) {
+
+            // 기존 response.data 가 있으면 유지, 없으면 {} 빈 객체 할당
+            response.data = response.data || {};
+            // 기존 response.data.header 가 있으면 유지, 없으면 {} 빈 객체 할당
+            response.data.responseResultHeader = response.data.responseResultHeader || {};
+
+            //success
+            console.log(response.data);
+            alert('장바구니에 상품을 추가하였습니다.');
+
+        }).catch(function(error) {
+
+            if (error.response) {
+                //요청 후, 서버가 2xx 범위에 벗어나는 상태 코드를 주었을 때 (@Valid 유효성 검사 실패 시 익셉션 핸들러 코드 및 중복 이메일 검사)
+                console.log(error.response.data);
+                alert(error.response.data.errorMessage);
+            }
+            console.log(error);
+        });
+    }
+
+    function order(){}
+
+    function isLoginCheck(){
+        let email = document.getElementById('email').value;
+        if(email == null || email == ''){
+            alert('로그인을 해주세요');
+            location.href = '/login';
+            return false;
+        }
+        return true;
+    }
+
+    </script>
+    </th:block>
+
+<!--추가 CSS -->
+<th:block layout:fragment="css">
+    <style>
+        .mgb-15{
+        margin-bottom:15px;
+        }
+        .mgt-30{
+        margin-top:30px;
+        }
+        .mgt-50{
+        margin-top:50px;
+        }
+        .repImgDiv{
+        margin-right:15px;
+        height:auto;
+        width:50%;
+        }
+        .repImg{
+        width:100%;
+        height:400px;
+        }
+        .wd50{
+        height:auto;
+        width:50%;
+        }
+    </style>
+</th:block>
+
+</head>
+<body>
+
+<div th:replace="fragments/header::header"></div>
+
+<div class="content">
+    <input type="hidden" id="productId" th:value="${detail.productId}">
+
+    <!-- category info bar -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                카테고리 > <a th:href="@{/product/list.do(categoryId = ${detail.categoryId})}" th:text="${detail.categoryName}"></a> > <span th:text="${detail.productName}"></span>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="d-flex">
+        <div class="repImgDiv">
+            <img th:src="${detail.imgUrlPath}" class = "rounded repImg" th:alt="${detail.imgOriginName}">
+        </div>
+        <div class="wd50">
+      <span th:if="${detail.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="badge badge-primary mgb-15">
+        판매중
+      </span>
+      <span th:unless="${detail.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="badge btn-danger mgb-15" >
+        품절
+      </span>
+            <div class="h4" th:text="${detail.productName}"></div>
+            <hr class="my-4">
+
+            <div class="text-right">
+                <div class="h4 text-danger text-left">
+                    <input type="hidden" th:value="${detail.productPrice}" id="productPrice">
+                    <span th:text="${detail.productPrice}"></span>원
+                    <span class="badge badge-pill badge-light" th:text="'재고: '+${detail.productStock} + '개'"></span>
+                </div>
+                <div class="input-group w-50">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">수량</span>
+                    </div>
+                    <input type="number" name="cartQuantity" id="cartQuantity" class="form-control" value="1" th:min="1" th:max="${detail.productStock}">
+                </div>
+            </div>
+            <hr class="my-4">
+
+            <div class="text-right mgt-50">
+                <h5>결제 금액</h5>
+                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+            </div>
+            <div th:if="${detail.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="text-right">
+                <button type="button" class="btn btn-light border border-primary btn-lg"
+                        onclick="addCart()">장바구니 담기</button>
+                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+                <input type="hidden" th:value="${email}" id="email">
+            </div>
+            <div th:unless="${detail.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="text-right">
+                <button type="button" class="btn btn-danger btn-lg">품절</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid mgt-30">
+        <div class="container">
+            <h4 class="display-5">상품 상세 설명</h4>
+            <hr class="my-4">
+            <p class="lead" th:text="${detail.productDescription}"></p>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+
+
+
+</body>
+</html>
