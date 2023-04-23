@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품등록</title>
+
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/layout1.css}" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- axios cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+
+      // HTML 과 script 가 로드된 시점에 발생하는 이벤트
+      window.addEventListener('DOMContentLoaded', function(){
+
+        //카테고리 등록 버튼 클릭 이벤트
+        document.getElementById('btn-product-add').addEventListener('click', function(){
+
+          const frm = new FormData();
+
+          let url = '/api/admin/addProduct';
+          let categoryId = document.getElementById('categoryId').value;
+          let productName = document.getElementById('productName').value;
+          let productPrice = document.getElementById('productPrice').value;
+          let productStock = document.getElementById('productStock').value;
+          let productDescription = document.getElementById('productDescription').value;
+          let publishStatus = document.querySelector('input[name="publishStatus"]:checked').value;
+          let fileInput = document.getElementById('fileInput').files[0];
+
+          const data = {
+            categoryId: categoryId
+            , productName: productName
+            , productPrice: productPrice
+            , productStock: productStock
+            , productDescription: productDescription
+            , publishStatus: publishStatus
+          };
+
+          frm.append("fileInput", fileInput);
+          frm.append("data", new Blob([JSON.stringify(data)], {
+            type: "application/json"
+          })); // data 개체를 가져와서 JSON.stringify()를 사용하여 JSON 문자열로 변환한 다음 해당 JSON 문자열을 포함하는 새 Blob 개체를 만듭니다
+
+          axios.post(url, frm).then(function(response) {
+
+            // 기존 response.data 가 있으면 유지, 없으면 {} 빈 객체 할당
+            response.data = response.data || {};
+            // 기존 response.data.header 가 있으면 유지, 없으면 {} 빈 객체 할당
+            response.data.responseResultHeader = response.data.responseResultHeader || {};
+
+            //success
+            console.log(response.data);
+            alert('상품 등록이 완료되었습니다.');
+            location.href = '/admin/product/list.do';
+
+          }).catch(function(error) {
+
+            if (error.response) {
+              //요청 후, 서버가 2xx 범위에 벗어나는 상태 코드를 주었을 때 (@Valid 유효성 검사 실패 시 익셉션 핸들러 코드 및 중복 이메일 검사)
+              console.log(error.response.data);
+              alert(error.response.data.errorMessage);
+            }
+            console.log(error);
+          });
+        });
+
+        bindDomEvent();
+
+      }); //window.addEventListener
+
+      function bindDomEvent(){
+            $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();  //이미지 파일명
+                var fileExt = fileName.substring(fileName.lastIndexOf(".")+1); // 확장자 추출
+                fileExt = fileExt.toLowerCase(); //소문자 변환
+
+                if(fileExt != "jpg" && fileExt != "jpeg" && fileExt != "gif"
+                 && fileExt != "png" && fileExt != "bmp"){
+                    alert("이미지 파일만 등록이 가능합니다.");
+                    return;
+                }
+
+                $(this).siblings(".custom-file-label").html(fileName);
+            });
+        }
+    </script>
+    </th:block>
+
+
+    <!--추가 CSS -->
+    <th:block layout:fragment="css">
+        <style>
+      .input-group {
+            margin-bottom : 15px
+        }
+        .img-div {
+            margin-bottom : 10px
+        }
+        .form-check{
+            margin: 5px 0 0 20px;
+        }
+    </style>
+    </th:block>
+
+</head>
+<body>
+
+<div th:replace="fragments/header::header"></div>
+
+<div class="content">
+    <p class="h2">상품 등록</p>
+
+    <div class="form-group">
+        <select class="custom-select" id="categoryId" name="categoryId">
+            <option value="">카테고리 선택</option>
+            <option th:each="category : ${categorySelectList}"
+                    th:value="${category.categoryId}"
+                    th:text="${category.categoryName}">
+            </option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">상품명</span>
+        </div>
+        <input type="text"  class="form-control" id="productName" name="productName" placeholder="상품명을 입력해주세요">
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">가격</span>
+        </div>
+        <input type="number"  class="form-control" id="productPrice" name="productPrice" placeholder="상품의 가격을 입력해주세요">
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">재고</span>
+        </div>
+        <input type="number"  class="form-control" id="productStock" name="productStock" placeholder="상품의 재고를 입력해주세요">
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">상품 상세 내용</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea" id="productDescription" name="productDescription" rows="3"></textarea>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">상품 게시여부</span>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="publishStatus" id="publishStatus_true" value="true" checked>
+            <label class="form-check-label" for="publishStatus_true">공개</label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="publishStatus" id="publishStatus_false" value="false">
+            <label class="form-check-label" for="publishStatus_false">비공개</label>
+        </div>
+    </div>
+
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">파일 업로드</span>
+        </div>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="fileInput" name="fileInput">
+            <label class="custom-file-label" for="fileInput" th:text="상품이미지"></label>
+        </div>
+    </div>
+
+    <div style="text-align: center">
+        <button type="submit" class="btn btn-primary" id="btn-product-add">저장</button>
+    </div>
+
+</div>
+
+
+<div th:replace="fragments/footer::footer"></div>
+
+
+
+</body>
+</html>
