@@ -63,7 +63,7 @@ public class ProductImgServiceImpl implements ProductImgService {
             imgPath = filePath[1];
             SubFolderFilePath = filePath[2];
 
-            imgUrlPath = File.separator + "images" + File.separator + "product" + File.separator + SubFolderFilePath;
+            imgUrlPath = File.separator + "img" + File.separator + "product" + File.separator + SubFolderFilePath;
         }
 
         log.info("imgSaveName: " + imgSaveName);
