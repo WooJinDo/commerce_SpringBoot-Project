@@ -57,7 +57,7 @@
         <div th:each="product, status : ${selectListFrontProduct}">
             <div class="card rounded" style="width: 300px;">
                 <a th:href="@{/product/detail/{productId}(productId = ${product.productId})}" class="text-dark">
-                    <img th:src="${product.imgUrlPath}" class="card-img-top" alt="${product.imgOriginName}" height="300">
+                    <img th:src="${product.imgUrlPath}" class="card-img-top" alt="${product.imgOriginName}" height="200">
                     <div class="card-body">
                         <span th:if="${product.productStatus == T(com.zerobase.minicommerce.product.type.ProductStatus).SELL}" class="badge badge-primary mgb-15">
                             판매중
