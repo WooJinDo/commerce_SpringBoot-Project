@@ -63,6 +63,7 @@ public class SecurityConfiguration {
                         "/member/register",
                         "/api/members", //회원가입 API
                         "/product/**",
+                        "/img/**", // 이미지 url path
                         "/error"
                 ).permitAll()
                 .antMatchers("/admin/**")
