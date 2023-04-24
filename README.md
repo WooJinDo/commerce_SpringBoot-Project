@@ -2,71 +2,114 @@
 
 - 미니 커머스 프로젝트
 
-## **프로젝트 구조**
+# [프로젝트 개요]
 
-![Untitled](https://user-images.githubusercontent.com/90567411/224066436-67a57ae3-cfb5-4f88-8026-3f644cb7bbe7.png)
+| 항목 | 내용 |
+| --- | --- |
+| 프로젝트 소개 | 미니 커머스 서비스  |
+| 개발 인원 | 총 1명  |
+| 담당 역할 | 전체(개발, DB 세팅)  |
+| 개발 기간 | 총 48일 (2023-03-07 ~ 2022-04-24) |
+
+**⚡ [프로젝트 깃헙 바로가기](https://github.com/WooJinDo/mini-commerce)**
+
+# [프로젝트 설명]
+
+### 1) **사용 기술**
+
+---
+
+**Frontend   `HTML`** **`CSS`** **`javascript` `jQuery` `Thymeleaf`**
+
+---
+
+**Backend**    **`Java`** **`SpringBoot`** **`Gradle`** **`SpringSecurity`** **`SpringDataJPA`** **`Spring MVC`**
+
+---
+
+**Database   `MySQL`** 
+
+---
+
+**Collaboration & Tools   `IntelliJ`** **`Git`** **`Github`**
+
+### 2) **ERD**
+
+![mini_commerce_ERD.JPG](https://file.notion.so/f/s/fb28b6b3-6d84-410f-87ec-2005f12f5dc9/mini_commerce_ERD.jpg?id=1ca8a3a1-aff3-4dc2-b7f1-8d0c261106ed&table=block&spaceId=22ba97ba-d04f-4420-8e04-a5adb596b5b0&expirationTimestamp=1682410129121&signature=Q1NgJJBdVPXFN0emJLOz9nEt3567LBqm8kelrtVA1qk&downloadName=mini_commerce_ERD.JPG.jpg)
 
 
-## ERD
+### 3) 프로젝트 전체 구현 기능
 
-![commerce](https://user-images.githubusercontent.com/90567411/224065474-1674c4b3-b3a3-4447-bf40-b5469dc3cf47.JPG)
+1. **주요 기능 테이블**
+    
+    `MEMBER`- 쇼핑몰 회원 정보 테이블
+    
+    `CART`- 회원의 장바구니 목록 테이블
+    
+    `CART_PRODUCT`- 장바구니에 담긴 상품 정보 테이블
+    
+    `ORDERS`- 쇼핑몰 회원들의 주문 목록 테이블(보류)
+    
+    `ORDER_PRODUCT`- 쇼핑몰 상품 정보 테이블(보류)
+    
+    `PRODUCT_IMG`- 상품에 대한 이미지 정보를 담고 있는 테이블
+    
+    `CATEGORY`- 상품 카테고리에 대한 정보를 담고 있는 테이블
+    
+    `CATEGORY_IMG`- 상품에 카테고리에 대한 이미지 정보를 담고 있는 테이블
+    
 
-
-## 사용 기술 스택
-- SpringBoot
-- Java
-- MySQL
-- JPA
-- MyBatis
-- Thymeleaf
-
-## 프로젝트 기능
-
-- 팀이 선택한 주제별 구현해야 하는 기능에 대해 상세 요구사항을 작성해주세요.
-
-<aside>
-💡 주제별 구현 기능
-
-- **주제 3. 커머스 과제**
-    - [ ]  상품명 검색 기능
-    - [ ]  상품 장바구니 기능(상품 담기/장바구니 조회/장바구니 상품 삭제)
-    - [ ]  로그인 / 로그 아웃에 따른 장바구니 접근 허가 기능 구현
-</aside>
-
-**회원가입과 로그인**
+1. **회원 가입 및 로그인**
+    
+    [녹화_2023_04_24_13_03_47_271.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/82dc803d-0929-4e48-8799-e1360c939323/%EB%85%B9%ED%99%94_2023_04_24_13_03_47_271.mp4)
+    
 
 - 회원가입
-    - 회원가입시 아이디, 이메일, 이름, 전화번호, 비밀번호, 주소지 정보가 필요하다
-    - 회원가입 후 이메일 인증이 되어야 로그인이 가능하다
-    - 회원가입시 이미 회원가입된 아이디로 시도하면 에러를 발생한다
-
+    - 유효한 이메일 주소가 있으면 회원 가입이 가능하다
+    - 가입하려는 이메일이 중복이면 커스텀 익셉션에 걸려 `GlobalExceptionHandler` 로 보내진다
+    - 우편 번호 입력을 위해 다음 우편번호 API 적용
+    - @Valid 어노테이션을 통해 dto 값이 유효성 검사를 통과하지 못하면 `GlobalExceptionHandler`
+    
+    에서 처리할 수 있도록 하였습니다.
+    
 - 로그인
-    - 로그인시 회원가입한적 없는 아이디를 이용하여 로그인을 시도하면 에러가 발생한다
-    - 로그인시 비밀번호가 일치하지 않는다면 에러가 발생한다.
-    - 이메일 인증이 되어있지 않으면 에러가 발생한다.
+    - 이메일을 통하여 로그인
+    - spring security를 사용하여 로그인, 로그아웃 처리
 
-**상품 등록**
+1. **카테고리 등록, 상품 등록 및 수정(상세)**
+    
+    [카테고리, 상품 등록 수정.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/359930b3-0f5a-449c-9151-43d71f9135d2/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC_%EC%83%81%ED%92%88_%EB%93%B1%EB%A1%9D_%EC%88%98%EC%A0%95.mp4)
+    
 
-- 상품 등록은 관리자만 등록할 수 있다
+- 카테고리
+    - spring security를 이용하여 관리자로 로그인할 때 카테고리 관리 메뉴가 보여진다
+    - 카테고리를 생성하면 메인화면에 보여지게 된다
+    - 파일 업로드 시 선택하지 않고 등록을 시도할 경우`MissingServletRequestPartException` 을 이용하여 `GlobalExceptionHandler` 에서 처리
+    - @Valid 어노테이션을 통해 dto 값이 유효성 검사를 통과하지 못하면 `GlobalExceptionHandler`
+    
+    에서 처리할 수 있도록 하였습니다.
+    
+- 상품
+    - spring security를 이용하여 관리자로 로그인할 때 상품 관리 메뉴가 보여진다
+    - 카테고리를 생성하고 상품을 등록하면 화면에 출력됩니다.
+    - 상품 등록, 수정화면에서 게시 여부를 통해 상품이 공개, 비공개로 나뉘어 진다
+    - @Valid 어노테이션을 통해 dto 값이 유효성 검사를 통과하지 못하면 `GlobalExceptionHandler`
+    
+    에서 처리할 수 있도록 하였습니다.
+    
 
-**상품 목록, 상세 및 검색 조회**
+1. **카테고리별, 상품 상세, 장바구니**
 
-- 관리자가 등록한 상품은 사용자가 로그인을 하지 않아도 조회가 가능하다
-- 검색결과를 정렬하여 조회할 수 있다
+[카테고리별_상품상세_장바구니.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f11e7782-3169-421e-a374-766e0e4b98c6/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84_%EC%83%81%ED%92%88%EC%83%81%EC%84%B8_%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.mp4)
 
-**상품 수정, 삭제**
-
-- 관리자는 상품 정보를 수정 삭제할 수 있다
-
-**장바구니 상품 담기**
-
-- 로그인한 사용자는 상품 상세페이지에서 수량을 선택하여 장바구니에 상품을 담을 수 있다
-- 장바구니에 상품 수량이 넘어오면 상품 재고수량은 줄어든다
-
-**장바구니 조회**
-
-- 로그인한 사용자는 장바구니 목록 조회가 가능하고,  결제 예상금액을 볼 수 있다
-
-**장바구니 상품 수정, 삭제**
-
-- 로그인한 사용자는 장바구니 상품 수량 수정 및 삭제가 가능하다
+- 상품 and 상세
+    - 상품 페이지는 카테고리를 선택하면 해당 상품들이 출력
+    - 상세 페이지는 재고 이상으로 장바구니에 담을 수 없고, 담을 시 커스텀 익셉션에 걸려 `GlobalExceptionHandler` 로 보내진다
+    - 수량 변경 시 결제 금액이 동시에 변경되게 하였다
+- 장바구니
+    - 재고 이상으로 장바구니에 담을 수 없고, 담을 시 커스텀 익셉션에 걸려 `GlobalExceptionHandler` 로 보내진다
+    - 선택 박스를 클릭하면 총 주문 금액이 출력되도록 하였고, 수량 변경을 하면 가격과
+        
+        총 주문 금액이 변경된다
+        
+    - 선택 박스를 클릭 하고 삭제 하고 싶은 상품을 전체 또는 개별 삭제 가능하다
