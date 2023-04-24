@@ -59,7 +59,7 @@
     `CATEGORY_IMG`- 상품에 카테고리에 대한 이미지 정보를 담고 있는 테이블
     
 
-1. **회원 가입 및 로그인**
+2. **회원 가입 및 로그인**
     
     [녹화_2023_04_24_13_03_47_271.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/82dc803d-0929-4e48-8799-e1360c939323/%EB%85%B9%ED%99%94_2023_04_24_13_03_47_271.mp4)
     
@@ -76,7 +76,7 @@
     - 이메일을 통하여 로그인
     - spring security를 사용하여 로그인, 로그아웃 처리
 
-1. **카테고리 등록, 상품 등록 및 수정(상세)**
+3. **카테고리 등록, 상품 등록 및 수정(상세)**
     
     [카테고리, 상품 등록 수정.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/359930b3-0f5a-449c-9151-43d71f9135d2/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC_%EC%83%81%ED%92%88_%EB%93%B1%EB%A1%9D_%EC%88%98%EC%A0%95.mp4)
     
@@ -98,7 +98,7 @@
     에서 처리할 수 있도록 하였습니다.
     
 
-1. **카테고리별, 상품 상세, 장바구니**
+4. **카테고리별, 상품 상세, 장바구니**
 
 [카테고리별_상품상세_장바구니.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f11e7782-3169-421e-a374-766e0e4b98c6/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84_%EC%83%81%ED%92%88%EC%83%81%EC%84%B8_%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.mp4)
 
