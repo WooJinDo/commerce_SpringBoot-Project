@@ -35,7 +35,7 @@
 
 ### 2) **ERD**
 
-![mini_commerce_ERD.JPG](https://file.notion.so/f/s/fb28b6b3-6d84-410f-87ec-2005f12f5dc9/mini_commerce_ERD.jpg?id=1ca8a3a1-aff3-4dc2-b7f1-8d0c261106ed&table=block&spaceId=22ba97ba-d04f-4420-8e04-a5adb596b5b0&expirationTimestamp=1682410129121&signature=Q1NgJJBdVPXFN0emJLOz9nEt3567LBqm8kelrtVA1qk&downloadName=mini_commerce_ERD.JPG.jpg)
+![mini_commerce_ERD](https://user-images.githubusercontent.com/90567411/234384633-c22604dd-7a29-4ef2-a29e-7c977bf7b5a9.JPG)
 
 
 ### 3) 프로젝트 전체 구현 기능
@@ -61,8 +61,8 @@
 
 2. **회원 가입 및 로그인**
     
-    [녹화_2023_04_24_13_03_47_271.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/82dc803d-0929-4e48-8799-e1360c939323/%EB%85%B9%ED%99%94_2023_04_24_13_03_47_271.mp4)
-    
+
+
 
 - 회원가입
     - 유효한 이메일 주소가 있으면 회원 가입이 가능하다
@@ -77,8 +77,6 @@
     - spring security를 사용하여 로그인, 로그아웃 처리
 
 3. **카테고리 등록, 상품 등록 및 수정(상세)**
-    
-    [카테고리, 상품 등록 수정.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/359930b3-0f5a-449c-9151-43d71f9135d2/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC_%EC%83%81%ED%92%88_%EB%93%B1%EB%A1%9D_%EC%88%98%EC%A0%95.mp4)
     
 
 - 카테고리
@@ -100,7 +98,6 @@
 
 4. **카테고리별, 상품 상세, 장바구니**
 
-[카테고리별_상품상세_장바구니.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f11e7782-3169-421e-a374-766e0e4b98c6/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%B3%84_%EC%83%81%ED%92%88%EC%83%81%EC%84%B8_%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.mp4)
 
 - 상품 and 상세
     - 상품 페이지는 카테고리를 선택하면 해당 상품들이 출력
